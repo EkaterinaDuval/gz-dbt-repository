@@ -9,7 +9,10 @@ sources:
      tables:
        - name: sales
          identifier: raw_gz_sales
+         description : data sur les ventes grwz, avec la qté, les id et le revenue
        - name: product
          identifier : raw_gz_product
+         description : data sur les produits vendus
        - name: ship
          identifier : raw_gz_ship
+         description : data sur les détails de livraison 
