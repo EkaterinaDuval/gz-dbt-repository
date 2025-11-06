@@ -36,3 +36,11 @@ sources:
             tests:
              - unique
              - not_null
+      - name: adwords
+        identifier: dauntless-glow-475708-u9.gz_raw_data.raw_gz_adwords
+      - name: bing
+        identifier: dauntless-glow-475708-u9.gz_raw_data.raw_gz_bing
+      - name: facebook
+        identifier: dauntless-glow-475708-u9.gz_raw_data.raw_gz_facebook
+      - name: criteo
+        identifier: dauntless-glow-475708-u9.gz_raw_data.raw_gz_criteo
