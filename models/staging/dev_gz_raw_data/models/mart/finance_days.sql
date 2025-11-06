@@ -1,4 +1,19 @@
-select *
-from {{ ref('nt_orders_margin') }}
-left join {{ ref('stg_dev_gz_raw_data__ship') }}
-using (orders_id)
+WITH orders_per_day AS (
+    SELECT date_date,
+    COUNT(DISTINCT orders_id) AS nb_transactions,
+    ROUND(SUM(revenue),2) AS revenue,
+    ROUND(SUM(margin),2) AS margin,
+    ROUND(SUM(operational_margin),2) AS operational_margin,
+    ROUND(SUM(purchase_cost),2) AS purchase_cost,
+    ROUND(SUM(shipping_fee),2) AS shipping_fee,
+    ROUND(SUM(logcost),2) AS logcost,
+    ROUND(SUM(ship_cost),2) AS ship_cost,
+    SUM(quantity) AS quantity
+FROM {{ ref('int_orders_operational') }}
+GROUP BY date_date
+)
+
+SELECT date_date, revenue, margin, operational_margin, purchase_cost, shipping_fee, logcost, ship_cost, quantity,
+    ROUND(revenue / NULLIF(nb_transactions, 0), 2) AS average_basket
+FROM orders_per_day
+ORDER BY date_date DESC
