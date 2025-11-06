@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: dev_gz_raw_data
+    database: dauntless-glow-475708-u9
+    schema: gz_raw_data
+    loader: bigquery
+    description: connection entre bigquery et dbt pour raw_data, import des tables sales, product, ship
+    tables:
+
+      - name: sales
+        identifier: raw_gz_sales
+        description: data sur les ventes grwz, avec la qté, les id et le revenue
+        loaded_at_field: date_date
+        columns:
+           - name: date_date
+             description: date of purchase  
+        tests: 
+          - unique:
+             column_name: "(orders_id || '-' || pdt_id)"
+
+      - name: product
+        identifier: raw_gz_product
+        description: data sur les produits vendus
+        columns:
+          - name: products_id
+            tests:
+             - unique
+             - not_null
+          
+      - name: ship
+        identifier: raw_gz_ship
+        description: data sur les détails de livraison
+        columns:
+          - name: orders_id
+            tests:
+             - unique
+             - not_null
